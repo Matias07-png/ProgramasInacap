@@ -1,0 +1,141 @@
+from math import sqrt
+from tkinter import Y
+from datetime import datetime
+
+opcion = 99
+velocidad = 0
+encendido = False
+distancia = 0
+def registro_usuario():
+    # Solicitamos datos
+    nombres = input("\nIngrese su nombre:")
+    apellidos = input("Ingrese su apellido:")
+    correos = input("Ingrese su correo electrónico:")
+    celular = input("Ingrese su número de celular:")
+    vehiculos = input("Ingrese la marca de su vehículo:")
+    patentes = input("Ingrese la patente de su vehículo:")
+    color = input("Ingrese el color de su vehículo:")
+    bd_usuarios = { 'nombres': nombres, 'apellidos': apellidos,
+                    'correos': correos,'celular': celular, 
+                    'vehiculos': vehiculos, 'patentes': patentes,
+                    'color': color}
+
+precio_total = 0
+def carrera():  
+    x1 = float(input("\nIngrese Latitud de origen:"))
+    y1 = float(input("Ingrese Longitud de origen:" ))
+    origen = x1, y1
+    print("\nSu dirección de origen es:" , origen )
+    x2 = float(input("\nIngrese Latitud de destino:"))
+    y2 = float(input("Ingrese Longitud de destino:"))
+    destino = x2, y2
+    print("\nSu dirección de destino es:" , destino )
+    precio_km = 200
+    distancia = sqrt((x2 - x1)** 2 + (y2 - y1)** 2)
+    global precio_total 
+    precio_total = distancia * precio_km
+    km = round(distancia)
+    pt = round(precio_total)
+    return precio_total
+
+
+def encender():
+    global encendido
+    encendido = not(encendido)
+    print("\nVehículo encendido" if encendido else "Vehículo apagado")
+ 
+
+def acelerar():
+    global velocidad
+    if velocidad >= 0 and encendido:
+    # SI VELOCIDAD ES MAYOR O IGUAL A 0, SIGNIFICA QUE SI 
+    # ESTÁ ENCENDIDO Y PRESIONO ESTA OPCIÓN NOS MOVEMOS EN 10 
+        velocidad = velocidad + 10
+        print("\nSu velocidad actual es de:" + (str(velocidad)))
+        avanzar()
+    else:
+        print("\nSu vehículo está apagado o en reversa")
+  
+
+def avanzar():
+    global velocidad, distancia
+    if velocidad > 0 and encendido:
+        distancia +=  velocidad * 10 
+    else:
+        print("\nEl vehículo está en reversa o apagado")
+    print("La distancia recorrida es de:" + (str(distancia))) 
+
+
+def frenar():
+    global velocidad
+    if velocidad >= 0 and encendido:
+        velocidad = velocidad - 10
+    # SI LA VELOCIDAD ES MAYOR O IGUAL A 0 Y EL AUTO ESTA 
+    # PRENDIDO RESTAMOS 10 A LA VELOCIDAD
+    elif velocidad<= 0:
+        print("\nSu vehìculo está detenido u apagado")
+    print("Su velocidad actual es de:" + (str(velocidad)))
+    # SI LA VELOCIDAD ES MENOR O IGUAL A 0 SU AUTO TA APAGAO' 
+    #ANEXAMENTE MOSTRARA LA VELOCIDAD ACTUAL QUE ESTÁ FUERA DE LA FUNCION 
+      
+def girar():
+    if velocidad >= 0 and encendido:
+        sentido = input("\nEn que sentido quiere virar?:")
+    if sentido == "izquierda":
+        print("\nVIRANDO A LA IZQUIERDA")
+    if sentido == "Derecha":
+        print("\nVIRANDO A LA DERECHA")
+
+def calculo_viaje():
+    precio_total
+    print("El monto a pagar es de:","$",round(precio_total))
+
+
+#PROGRAMA PRINCIPAL
+
+print("<< ============================ >>")
+print("            - UBER -") 
+print("<< ============================ >>")
+while opcion != "0":
+    # Presentamos el menú principal
+    lista_usuarios = []
+    print("\n=============")
+    print("MENÚ PRINCIPAL")
+    print("=============")
+    print("(1) Registrar conductor")
+    print("(2) Comenzar una carrera")
+    print("(3) Encender / Apagar  vehículo")
+    print("(4) Acelerar vehículo")
+    print("(5) Frenar vehículo")
+    print("(6) Girar vehículo")
+    print("(7) Finalizar carrera")
+    print("(0) Salir")
+    opcion = input("\nSeleccione alguna opcion:")
+
+    if opcion == "0":
+        break
+    # Con la opción 1 registramos
+    elif opcion == "1":
+        nuevo_usuario = registro_usuario()
+        lista_usuarios.append(nuevo_usuario)
+        print("\nUsuario registrado con exito!")
+ 
+    elif opcion == "2":
+        carrera()
+
+    elif opcion == "3":
+        encender()
+ 
+    elif opcion == "4":
+        acelerar()
+
+    elif opcion == "5":
+        frenar()
+
+    elif opcion == "6":
+        girar()
+
+    elif opcion == "7":
+        calculo_viaje()
+
+print("\nMuchas gracias por usar esta app")
